@@ -1,0 +1,49 @@
+WEBVTT
+Language: en
+
+NOTE
+Working session of the Concordance project, recorded and transcribed for the wiki.
+The names below are those of the fictional participants of the demonstration corpus;
+the build replaces them by stable pseudonyms before anything is published.
+
+00:01:12.000 --> 00:01:21.000
+<v Anna Duval>Let us start with the scope. The question is what the contract import reads, and what it leaves to the notes.
+
+00:04:22.000 --> 00:04:34.700
+<v Bram Kessler>Today an api note lists its operations by hand. When it declares a contract, the build reads the contract and produces one operation per operation id.
+
+00:08:22.000 --> 00:08:32.400
+<v Chiara Lindqvist>And when a note already exists for that operation? We have three operation notes under the model query api.
+
+00:11:47.000 --> 00:12:01.100
+<v Bram Kessler>The operation matching rule attaches the contract operation to the note that names the same operation id, or the same method and path. The note absorbs it; the imported operation does not exist twice.
+
+00:16:57.000 --> 00:17:08.800
+<v Anna Duval>So the operations table on the api page comes from the contract, and each row links to the note when one matches. What about an operation nobody wrote about?
+
+00:21:17.000 --> 00:21:26.500
+<v Bram Kessler>It stays an operation of the api with the properties of the contract only, and the operation unmatched check reports it, as a warning, so that someone writes the note.
+
+00:26:02.000 --> 00:26:15.200
+<v Chiara Lindqvist>From the integrator's side, the contract file lives next to the note. Relative path, under contracts, and the fingerprint cache keeps the parsed text between two builds.
+
+00:31:32.000 --> 00:31:42.900
+<v Anna Duval>Now the viewer. The specification named an interactive console for openapi contracts. It weighs more than the page budget, and it wants to call the api from the page.
+
+00:35:32.000 --> 00:35:46.600
+<v Bram Kessler>The site is static and reads from the disk. A console that fetches the contract over the network breaks that on the first page it is used on.
+
+00:39:07.000 --> 00:39:19.300
+<v Chiara Lindqvist>Agreed. What readers need is the list of operations, their method and path, the schemas, and a link to the note. Nothing that calls anything.
+
+00:42:17.000 --> 00:42:27.000
+<v Anna Duval>Then the decision of this session: a purpose-built contract viewer, an island rendered from a json fragment of the contract, loaded on demand, under the page budget. Chiara Lindqvist writes the decision note.
+
+00:45:12.000 --> 00:45:25.700
+<v Chiara Lindqvist>I will, under the publication decisions. And the schemas become candidate objects, as Bram Kessler said, so the to-do page lists them.
+
+00:48:52.000 --> 00:49:03.400
+<v Bram Kessler>One more thing for the record: a contract that cannot be fetched or parsed yields the contract unreachable finding and the note keeps its hand-written operations. The build never stops on it.
+
+00:53:12.000 --> 00:53:21.100
+<v Anna Duval>Good. Findings, not failures. That closes the scope of the contract import for this version.

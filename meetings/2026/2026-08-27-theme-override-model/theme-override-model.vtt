@@ -1,0 +1,49 @@
+WEBVTT
+Language: en
+
+NOTE
+Working session of the Concordance project, recorded and transcribed for the wiki.
+The names below are those of the fictional participants of the demonstration corpus;
+the build replaces them by stable pseudonyms before anything is published.
+
+00:01:00.000 --> 00:01:09.000
+<v Anna Duval>Chiara Lindqvist brought a deck for this one. Six slides on how a project overrides the look of its site without forking the theme.
+
+00:05:15.000 --> 00:05:27.700
+<v Chiara Lindqvist>Slide one is the problem. An integrator wants the organisation's name, logo and colours, sometimes a different label here and there, and never wants to touch the components.
+
+00:10:15.000 --> 00:10:25.400
+<v Bram Kessler>Slide two is what exists: theme.yaml. Name, logo, favicon, the font families, the corner radius, the light and dark palettes, the footer, an extra stylesheet.
+
+00:15:00.000 --> 00:15:14.100
+<v Chiara Lindqvist>Slide three is the model we propose. Every page is a set of named slots, each rendered by a component with a typed view model. The view model is the contract between the generator and a theme.
+
+00:20:30.000 --> 00:20:41.800
+<v Dario Mensah>A theme that replaces a component has to keep the view model, then. What stops a theme from dropping the mentions or the legend?
+
+00:24:30.000 --> 00:24:39.500
+<v Chiara Lindqvist>Nothing stops it, and that is deliberate. The accessibility checks run on the rendered pages whatever the theme, and the page budget is measured on every build.
+
+00:29:40.000 --> 00:29:53.200
+<v Bram Kessler>Slide four, the islands. Only the interactive parts are hydrated: the search, the mentions panel, the mode switch. One small bundle per island, loaded only by the pages that use it.
+
+00:34:30.000 --> 00:34:40.900
+<v Anna Duval>And the stylesheet of the project wins by construction. Four cascade layers: tokens, base, components, project. The project layer is last, so nothing in the default theme can outrank it.
+
+00:39:05.000 --> 00:39:19.600
+<v Dario Mensah>Slide five is the labels, I think. A project overrides any message of the catalogue through theme.yaml, in the same syntax as the message it replaces, with the same variables.
+
+00:43:25.000 --> 00:43:37.300
+<v Chiara Lindqvist>Yes, and a missing variable is a configuration error that names the key. No silent fallback to the source label.
+
+00:48:45.000 --> 00:48:55.000
+<v Anna Duval>Slide six, the decision. Slots, islands and layers: named slots with typed view models, islands for the interactive parts only, and cascade layers so that the project stylesheet wins. Without javascript the content stays reachable.
+
+00:52:50.000 --> 00:53:03.700
+<v Bram Kessler>One remark for the minutes. A type module may ship a page of its own for its type, and it goes through the same slot, so the model covers the plugins too.
+
+00:56:40.000 --> 00:56:51.400
+<v Dario Mensah>Then I have what I need for the checks. The budget stays at one hundred and fifty kilobytes per page, previews excluded.
+
+01:00:10.000 --> 01:00:19.100
+<v Anna Duval>Agreed by everyone. Chiara Lindqvist files the deck next to these minutes so that the wiki shows the three on one page.

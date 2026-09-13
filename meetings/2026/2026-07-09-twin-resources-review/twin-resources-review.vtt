@@ -1,0 +1,49 @@
+WEBVTT
+Language: en
+
+NOTE
+Working session of the Concordance project, recorded and transcribed for the wiki.
+The names below are those of the fictional participants of the demonstration corpus;
+the build replaces them by stable pseudonyms before anything is published.
+
+00:01:35.000 --> 00:01:44.000
+<v Anna Duval>The subject today is the twin resources. A workshop exists as a deck, as notes and as a transcript, and the reader must see one page.
+
+00:05:25.000 --> 00:05:37.700
+<v Dario Mensah>The first import of a corpus puts every file in one commit. If the commit alone grouped files, the whole repository would be one document.
+
+00:09:55.000 --> 00:10:05.400
+<v Bram Kessler>That is why the commit and the folder only reinforce a pair. A pair is founded by a declaration in the frontmatter, a shared base name, a title equal to a heading, or similar text.
+
+00:15:05.000 --> 00:15:19.100
+<v Anna Duval>Similar text is the expensive part. Comparing every pair of a corpus of a thousand files is half a million comparisons.
+
+00:19:10.000 --> 00:19:21.800
+<v Bram Kessler>Hence the proposal: each text goes to its comparison form, then to shingles of five words, then to a minhash signature of one hundred and twenty-eight functions under a fixed seed. Banding enumerates the candidate pairs; two signatures that share no band are never compared.
+
+00:24:10.000 --> 00:24:19.500
+<v Dario Mensah>And the estimate is accurate to about one tenth. Is that enough to merge two files without a human looking?
+
+00:28:30.000 --> 00:28:43.200
+<v Bram Kessler>In auto mode the pairs estimated at one half or more get their exact jaccard index recomputed on the full shingle sets. The finding gives the share of lines in common.
+
+00:33:10.000 --> 00:33:20.900
+<v Anna Duval>A deck and its notes rarely share sentences, though. The deck says three words per slide; the notes say a paragraph per slide.
+
+00:37:05.000 --> 00:37:19.600
+<v Bram Kessler>Then the pair is an inclusion rather than a duplicate: when the word counts differ by more than half, the content signal is capped, and the finding says so. The base name and the title do the rest.
+
+00:41:15.000 --> 00:41:27.300
+<v Dario Mensah>What does the reader see on the page? I want the reason the files were grouped, not only the tabs.
+
+00:45:45.000 --> 00:45:55.000
+<v Anna Duval>The panel names the signals of every scored pair: same folder, same base name, same commit, high textual overlap. And the lock file wins over the score, both ways.
+
+00:49:30.000 --> 00:49:43.700
+<v Dario Mensah>Then the determinism question. Two runs, or a shuffled input, must give the same groups, or the build log is unreadable from one night to the next.
+
+00:53:30.000 --> 00:53:41.400
+<v Bram Kessler>Resources are sorted by identifier before anything else, the seed is fixed and every output is sorted. The golden corpus has a test for it.
+
+00:57:55.000 --> 00:58:04.100
+<v Anna Duval>Decision of the session, then: minhash for twin resources, as Bram Kessler described it, with the exact index recomputed on the close pairs. Dario Mensah reviews the finding wording.

@@ -1,0 +1,77 @@
+name: lint
+
+# Lints this repository with `concordance lint` on every pull request and every
+# push to main, publishes the SARIF log so that each finding appears in the
+# margin of the diff, fails on an error finding, and, on main, tells the wiki
+# to rebuild.
+#
+# Interim form until the first release of the tool: the linter is built from a
+# checkout of the tool's repository at main. Once the package is published, the
+# three "Build the linter" steps become one line,
+# `npx --yes concordance lint --format sarif --output concordance.sarif`, as the
+# pipelines guide of the tool shows.
+#
+# The dispatch needs a token that can reach the configuration repository, which
+# the automatic token of a run cannot: a fine-grained personal access token with
+# the "Contents: read and write" permission on `concordance-wiki/demo-wiki`,
+# stored as the `WIKI_DISPATCH_TOKEN` secret of this repository. Without the
+# secret the dispatch step is skipped and the nightly build of the wiki catches
+# up.
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  security-events: write
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    env:
+      WIKI_DISPATCH_TOKEN: ${{ secrets.WIKI_DISPATCH_TOKEN }}
+    steps:
+      # The content lands in its own folder so that the tool checked out beside it is never
+      # read as part of the repository.
+      - uses: actions/checkout@v4
+        with:
+          path: content
+      - name: Check out the tool
+        uses: actions/checkout@v4
+        with:
+          repository: concordance-wiki/concordance
+          ref: main
+          path: .tool
+      - uses: pnpm/action-setup@v4
+        with:
+          package_json_file: .tool/package.json
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .tool/.nvmrc
+          cache: pnpm
+          cache-dependency-path: .tool/pnpm-lock.yaml
+      - name: Build the linter
+        working-directory: .tool
+        run: |
+          pnpm install --frozen-lockfile
+          pnpm build
+      - id: lint
+        working-directory: content
+        run: node ../.tool/packages/cli/dist/bin.js lint --source briefs --fail-on error --format sarif --output concordance.sarif
+        continue-on-error: true
+      - uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: content/concordance.sarif
+      - if: steps.lint.outcome == 'failure'
+        run: exit 1
+      - name: Tell the wiki to rebuild
+        # Skipped when the secret is absent; gh reads the token from GH_TOKEN.
+        if: github.event_name == 'push' && env.WIKI_DISPATCH_TOKEN != ''
+        env:
+          GH_TOKEN: ${{ secrets.WIKI_DISPATCH_TOKEN }}
+        run: |
+          gh api repos/concordance-wiki/demo-wiki/dispatches \
+            --field event_type=content-updated \
+            --field "client_payload[repository]=${GITHUB_REPOSITORY}" \
+            --field "client_payload[sha]=${GITHUB_SHA}"

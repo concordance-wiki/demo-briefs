@@ -1,0 +1,6 @@
+# The decks are written as flat ODF presentations and converted with LibreOffice;
+# the repository keeps the converted original and its preview only.
+*.fodp
+dist/
+.concordance-cache/
+node_modules/
