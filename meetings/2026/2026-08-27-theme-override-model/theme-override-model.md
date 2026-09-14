@@ -2,7 +2,6 @@
 date: 2026-08-27
 participants: [Participant-1, Participant-2, Participant-3, Participant-4]
 decisions: [specs/decisions/publication/slots-islands-and-layers]
-domain: publication
 source: theme-override-model.vtt
 ---
 # Theme override model

@@ -2,7 +2,6 @@
 date: 2026-07-09
 participants: [Participant-1, Participant-2, Participant-4]
 decisions: [specs/decisions/inference/minhash-for-twin-resources]
-domain: ingestion
 source: twin-resources-review.vtt
 ---
 # Twin resources review

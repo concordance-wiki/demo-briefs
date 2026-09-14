@@ -2,7 +2,6 @@
 date: 2026-06-18
 participants: [Participant-1, Participant-2, Participant-3]
 decisions: [specs/decisions/publication/purpose-built-contract-viewer]
-domain: inference
 source: contract-import-scope.vtt
 ---
 # Contract import scope review
