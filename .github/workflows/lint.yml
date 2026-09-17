@@ -74,10 +74,11 @@ jobs:
       - name: Tell the wiki to rebuild
         # Skipped when the secret is absent; gh reads the token from GH_TOKEN.
         # The token reaches this step alone, never the build of the tool above.
-        if: github.event_name == 'push' && secrets.WIKI_DISPATCH_TOKEN != ''
+        if: github.event_name == 'push'
         env:
           GH_TOKEN: ${{ secrets.WIKI_DISPATCH_TOKEN }}
         run: |
+          [ -n "$GH_TOKEN" ] || { echo "no dispatch token: the nightly build of the wiki catches up"; exit 0; }
           gh api repos/concordance-wiki/demo-wiki/dispatches \
             --field event_type=content-updated \
             --field "client_payload[repository]=${GITHUB_REPOSITORY}" \
