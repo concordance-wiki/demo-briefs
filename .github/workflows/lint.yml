@@ -43,6 +43,14 @@ jobs:
           repository: concordance-wiki/concordance
           ref: main
           path: .tool
+      # The configuration of the wiki this repository is a source of, so that its
+      # typing rules, its profile and its exclusions apply to the lint.
+      - name: Check out the wiki configuration
+        uses: actions/checkout@v4
+        with:
+          repository: concordance-wiki/demo-wiki
+          ref: main
+          path: .wiki
       - uses: pnpm/action-setup@v4
         with:
           package_json_file: .tool/package.json
@@ -58,7 +66,7 @@ jobs:
           pnpm build
       - id: lint
         working-directory: content
-        run: node ../.tool/packages/cli/dist/bin.js lint --source briefs --fail-on error --format sarif --output concordance.sarif
+        run: node ../.tool/packages/cli/dist/bin.js lint --source briefs --config ../.wiki/concordance.yaml --fail-on error --format sarif --output concordance.sarif
         continue-on-error: true
       - uses: github/codeql-action/upload-sarif@v3
         with:
