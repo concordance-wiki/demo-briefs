@@ -29,16 +29,14 @@ permissions:
 jobs:
   lint:
     runs-on: ubuntu-latest
-    env:
-      WIKI_DISPATCH_TOKEN: ${{ secrets.WIKI_DISPATCH_TOKEN }}
     steps:
       # The content lands in its own folder so that the tool checked out beside it is never
       # read as part of the repository.
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           path: content
       - name: Check out the tool
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           repository: concordance-wiki/concordance
           ref: main
@@ -46,15 +44,15 @@ jobs:
       # The configuration of the wiki this repository is a source of, so that its
       # typing rules, its profile and its exclusions apply to the lint.
       - name: Check out the wiki configuration
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           repository: concordance-wiki/demo-wiki
           ref: main
           path: .wiki
-      - uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
         with:
           package_json_file: .tool/package.json
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version-file: .tool/.nvmrc
           cache: pnpm
@@ -68,14 +66,15 @@ jobs:
         working-directory: content
         run: node ../.tool/packages/cli/dist/bin.js lint --source briefs --config ../.wiki/concordance.yaml --fail-on error --format sarif --output concordance.sarif
         continue-on-error: true
-      - uses: github/codeql-action/upload-sarif@v3
+      - uses: github/codeql-action/upload-sarif@faaca9a8f6edddba5725ffe5adefdab6669a2eca # v3
         with:
           sarif_file: content/concordance.sarif
       - if: steps.lint.outcome == 'failure'
         run: exit 1
       - name: Tell the wiki to rebuild
         # Skipped when the secret is absent; gh reads the token from GH_TOKEN.
-        if: github.event_name == 'push' && env.WIKI_DISPATCH_TOKEN != ''
+        # The token reaches this step alone, never the build of the tool above.
+        if: github.event_name == 'push' && secrets.WIKI_DISPATCH_TOKEN != ''
         env:
           GH_TOKEN: ${{ secrets.WIKI_DISPATCH_TOKEN }}
         run: |
