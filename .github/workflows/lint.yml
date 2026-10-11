@@ -49,7 +49,7 @@ jobs:
         # The published command line, at the version this wiki is linted with: what a reader of the
         # guides runs, and nothing of the tool's unreleased code runs next to the dispatch token.
         # Bump the version here when the tool is released.
-        run: npx --yes @concordance-wiki/cli@0.4.0 lint --source briefs --config ../.wiki/concordance.yaml --fail-on error --format sarif --output concordance.sarif
+        run: npx --yes @concordance-wiki/cli@1.0.0 lint --source briefs --config ../.wiki/concordance.yaml --fail-on error --format sarif --output concordance.sarif
         continue-on-error: true
       - uses: github/codeql-action/upload-sarif@faaca9a8f6edddba5725ffe5adefdab6669a2eca # v3
         with:
